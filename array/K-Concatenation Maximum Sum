@@ -1,0 +1,64 @@
+#define MOD (1'000'000'000 + 7)
+
+class Solution {
+public:
+    int kConcatenationMaxSum(vector<int> &arr, int k) {
+        long total_sum, min_sum, max_sum;
+        total_sum = min_sum = max_sum = 0;
+        for (int i = 0; i < arr.size(); ++i) {
+            total_sum += arr[i];
+            min_sum = min(total_sum, min_sum);
+            max_sum = max(total_sum - min_sum, max_sum);
+        }
+        if (k == 1 || max_sum == 0)
+            return max_sum;
+        long onepass_sum = total_sum;
+        //using kaden's algo twice
+        for (int i = 0; i < arr.size(); ++i) {
+            total_sum += arr[i];
+            min_sum = min(total_sum, min_sum);
+            max_sum = max(total_sum - min_sum, max_sum);
+        }
+        if (k == 2 || onepass_sum < 0)
+            return max_sum % MOD;
+        return (max_sum + (k - 2) * onepass_sum) % MOD;
+    }
+};
+
+
+
+//39 test cases passed 
+//#define MOD (1'000'000'000 + 7)
+// class Solution {
+// public:
+//     long long kConcatenationMaxSum(vector<int>& arr, int k) {
+//         vector<int> nums;
+//         while(k>0){
+//             for(int i=0;i<arr.size();i++){
+//                 nums.push_back(arr[i]);
+//                  }
+//             k--;
+//         }
+//            long cmax=0,sum=0,max1=INT_MIN;
+//             for(int i=0;i<nums.size();i++){
+//                 if(nums[i]>max1){
+//                     max1=nums[i];
+//                 }
+//                 cmax+=nums[i];
+//                 if(cmax>sum){
+//                     sum=cmax;
+//                 }
+//                 if(cmax<0){
+//                     cmax=0;
+//                     continue;
+//                 }
+//             }
+//             if(sum==0){
+//                 return 0;
+//             }
+//             return sum%MOD;}
+// };
+
+
+
+

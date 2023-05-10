@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        //we need to traverse from both sides to find the max as if [-8,4,3,2] then from left to right the product can never be positive so after finding the max from both end we will consider the max from both those terms
+        int maxi=INT_MIN;
+        int p=1;
+        for(int i=0;i<nums.size();i++){
+            p*=nums[i];
+            maxi=max(p,maxi);
+            if(p==0){
+                p=1;
+            }
+        }
+        p=1;
+        for(int i=nums.size()-1;i>=0;i--){
+            p*=nums[i];
+            maxi=max(p,maxi);
+            if(p==0){
+                p=1;
+            }
+        }
+        return maxi;
+    }
+};
+
